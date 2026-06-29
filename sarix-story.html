@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sarix — The Story</title>
+<style>
+  :root{
+    --bg:#0b0f14; --panel:#121922; --line:#243240; --ink:#eaf1f6; --mute:#8295a3;
+    --teal:#37d3c6; --teal-dim:#1d6f69; --cu:#c97a4a; --au:#e7b73f; --ag:#cfd8de;
+    --good:#52c98a; --gold:#e7b73f; --violet:#9085e9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.55}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+  a{color:var(--teal);text-decoration:none}
+
+  nav{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(11,15,20,.92);
+    backdrop-filter:blur(10px);z-index:50}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;max-width:860px}
+  .logo{font-weight:800;letter-spacing:5px;font-size:18px}
+  .logo span{color:var(--teal)}
+  nav a.cta{font-size:12px;letter-spacing:1px;color:var(--teal);border:1px solid var(--teal-dim);
+    padding:8px 14px;border-radius:30px}
+
+  .hero{padding:70px 0 30px;text-align:center}
+  .eyebrow{font-size:12px;letter-spacing:4px;color:var(--teal);font-weight:600}
+  h1{font-size:clamp(30px,5.5vw,50px);font-weight:800;letter-spacing:-1px;line-height:1.05;margin:16px 0 14px}
+  h1 em{font-style:normal;color:var(--teal)}
+  .lede{color:var(--mute);font-size:18px;max-width:600px;margin:0 auto}
+
+  /* story chapters */
+  .chapter{padding:40px 0;border-bottom:1px solid var(--line)}
+  .chapnum{font-size:12px;letter-spacing:3px;color:var(--teal);font-weight:700}
+  .chapter h2{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.6px;margin:10px 0 14px;line-height:1.1}
+  .chapter p{color:var(--mute);font-size:16px;max-width:640px;margin-bottom:14px}
+  .chapter p strong{color:var(--ink);font-weight:600}
+
+  .pull{font-size:clamp(19px,3vw,26px);font-weight:700;line-height:1.35;color:var(--ink);
+    border-left:3px solid var(--teal);padding-left:20px;margin:24px 0;max-width:640px}
+  .pull em{font-style:normal;color:var(--teal)}
+
+  /* expertise cards */
+  .edge{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+  @media(max-width:620px){.edge{grid-template-columns:1fr}}
+  .ecard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .ecard .ic{font-size:26px}
+  .ecard h4{font-size:16px;margin:10px 0 6px}
+  .ecard p{font-size:13.5px;color:var(--mute);margin:0}
+
+  /* patent flywheel */
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;margin-top:22px;background:var(--panel)}
+  @media(max-width:620px){.flow{grid-template-columns:1fr 1fr}}
+  .fstep{padding:20px 16px;text-align:center;border-right:1px solid var(--line)}
+  .fstep:last-child{border-right:none}
+  @media(max-width:620px){.fstep:nth-child(2){border-right:none}
+    .fstep:nth-child(1),.fstep:nth-child(2){border-bottom:1px solid var(--line)}}
+  .fstep .n{font-size:11px;letter-spacing:1px;color:var(--teal);font-weight:700}
+  .fstep h5{font-size:14px;margin:8px 0 5px}
+  .fstep p{font-size:12px;color:var(--mute);margin:0;line-height:1.4}
+
+  /* money lines */
+  .money{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+  @media(max-width:620px){.money{grid-template-columns:1fr}}
+  .mrow{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    display:flex;align-items:center;gap:14px;position:relative;overflow:hidden}
+  .mrow:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--teal)}
+  .mrow.m2:before{background:var(--cu)} .mrow.m3:before{background:var(--au)}
+  .mrow.m4:before{background:var(--violet)} .mrow.m5:before{background:#e34948}
+  .mrow .mi{font-size:22px;flex-shrink:0}
+  .mrow h5{font-size:14px;margin-bottom:3px}
+  .mrow p{font-size:12px;color:var(--mute);margin:0}
+
+  .stat-band{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+  @media(max-width:620px){.stat-band{grid-template-columns:1fr}}
+  .sb{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center}
+  .sb .v{font-size:26px;font-weight:800;color:var(--teal);letter-spacing:-.5px}
+  .sb .l{font-size:12px;color:var(--mute);margin-top:6px;line-height:1.4}
+
+  .closer{padding:60px 0;text-align:center}
+  .closer h2{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.8px;margin-bottom:12px}
+  .closer p{color:var(--mute);font-size:16px;max-width:500px;margin:0 auto 24px}
+  .btn{display:inline-block;padding:13px 26px;border-radius:30px;font-size:15px;font-weight:600;
+    background:var(--teal);color:#04140f;border:1px solid var(--teal)}
+  .btn:hover{background:#5ee6da}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 50px;color:var(--mute);font-size:11.5px;line-height:1.7}
+
+  /* electrowinning box */
+  .ewbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin:10px 0 16px}
+  .ewbox svg{width:100%;display:block}
+  .ewctrl{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+  .ewctrl input[type=range]{flex:1;min-width:120px;accent-color:#37d3c6}
+  .ewbtn{background:#0d141b;border:1px solid var(--line);color:var(--teal);font-size:12px;
+    padding:7px 14px;border-radius:8px;cursor:pointer}
+  .ewbtn:hover{border-color:var(--teal)}
+
+  /* revenue chart */
+  .chartbox{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin:22px 0 14px}
+  .chartleg{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;font-size:12px;color:var(--mute)}
+  .chartleg span{display:flex;align-items:center;gap:5px}
+  .chartleg i{width:10px;height:10px;border-radius:2px;display:inline-block}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <div class="logo">SAR<span>I</span>X</div>
+  <a href="#contact" class="cta">Get in touch</a>
+</div></nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">THE SARIX STORY</div>
+    <h1>Real science.<br>Real metal. <em>Real upside.</em></h1>
+    <p class="lede">A PhD-led electrochemistry team turning Australia's e-waste into recovered metal — and turning every new discovery into patents that pay.</p>
+  </div>
+
+  <!-- CHAPTER 1: THE PROBLEM -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 01 — THE PROBLEM</div>
+    <h2>Australia throws away a fortune.</h2>
+    <div class="stat-band" style="margin-bottom:22px">
+      <div class="sb"><div class="v">650,000 t</div><div class="l">e-waste thrown out in Australia every year</div></div>
+      <div class="sb"><div class="v">~$91B</div><div class="l">metal value in one year of the world's e-waste (UN)</div></div>
+      <div class="sb"><div class="v">20 kg</div><div class="l">per Australian per year — nearly 3× the global average</div></div>
+    </div>
+    <p>That 20 kg from <strong>every single person</strong> adds up to roughly <strong>650,000 tonnes a year nationally</strong> — and it's still growing. Yet Australia has almost no capacity to recover the metals inside those old circuit boards, so they get <strong>shipped overseas or buried</strong>, and the copper, gold and silver leave with them.</p>
+    <div class="pull">Roughly <em>78% of the value</em> in Australian e-waste currently leaves the country or goes to landfill.</div>
+  </section>
+
+  <!-- CHAPTER 2: THE SOLUTION -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 02 — THE SOLUTION</div>
+    <h2>We recover it with electricity.</h2>
+    <p>Sarix uses <strong>electrochemical recovery</strong> — the same proven science behind electroplating, run in reverse. We dissolve the metals out of shredded e-waste, then use a gentle electric current to plate them back out as pure metal. It runs cool, on electricity, with fewer chemicals than smelting — and it works <strong>onshore, at modest scale</strong>, where almost no one else does.</p>
+
+    <p style="font-size:13px;color:var(--teal);letter-spacing:1px;margin:24px 0 10px">↓ THE KEY STEP, LIVE — DRAG THE CURRENT SLIDER</p>
+    <div class="ewbox">
+      <svg viewBox="0 0 560 320" preserveAspectRatio="xMidYMid meet" id="ewsvg">
+        <defs>
+          <linearGradient id="ebath" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1d6f69" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#155f59" stop-opacity="0.45"/>
+          </linearGradient>
+          <clipPath id="etank"><rect x="120" y="70" width="320" height="200" rx="8"/></clipPath>
+        </defs>
+        <text x="160" y="34" text-anchor="middle" fill="#8295a3" font-size="12" font-weight="600">POWER SUPPLY</text>
+        <rect x="250" y="18" width="56" height="24" rx="5" fill="#1b2530" stroke="#37d3c6"/>
+        <text x="278" y="34" text-anchor="middle" fill="#37d3c6" font-size="12" font-weight="700">DC</text>
+        <text x="232" y="14" text-anchor="middle" fill="#8295a3" font-size="13">–</text>
+        <text x="326" y="14" text-anchor="middle" fill="#8295a3" font-size="13">+</text>
+        <path d="M232 18 V6 H384 V70" fill="none" stroke="#185fa5" stroke-width="2" stroke-linecap="round"/>
+        <path d="M326 18 V6 H224 V70" fill="none" stroke="#c97a4a" stroke-width="2" stroke-linecap="round"/>
+        <g clip-path="url(#etank)"><rect x="120" y="70" width="320" height="200" fill="url(#ebath)"/></g>
+        <rect x="120" y="70" width="320" height="200" rx="8" fill="none" stroke="#8295a3" stroke-width="1.2"/>
+        <rect id="eplate" x="176" y="80" width="0" height="180" fill="#c97a4a" opacity="0.9"/>
+        <rect x="170" y="80" width="8" height="180" rx="2" fill="#888780"/>
+        <text x="174" y="284" text-anchor="middle" fill="#8295a3" font-size="11">cathode (–)</text>
+        <rect x="382" y="80" width="8" height="180" rx="2" fill="#5f5e5a"/>
+        <text x="386" y="284" text-anchor="middle" fill="#8295a3" font-size="11">anode (+)</text>
+        <g id="eions"></g>
+        <g id="ebub"></g>
+        <text x="280" y="306" text-anchor="middle" fill="#52c98a" font-size="12">Cu²⁺ + 2e⁻ → pure copper plates onto the cathode</text>
+      </svg>
+      <div class="ewctrl">
+        <span style="font-size:13px;color:var(--mute)">Current</span>
+        <input type="range" id="ecur" min="1" max="10" value="6" step="1">
+        <span id="ecurlab" style="font-size:13px;color:var(--ink);min-width:46px">6 kA</span>
+        <button id="erun" class="ewbtn">Pause</button>
+        <span style="margin-left:auto;font-size:13px;color:var(--mute)">Plating: <b id="erate" style="color:var(--teal)">3.7 kg/h</b></span>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--mute)">More current → copper ions cross faster → metal plates thicker on the cathode, while oxygen bubbles off the anode. The copper-sulfate bath needs no added reagent — which is why this step is cheap to run.</p>
+  </section>
+
+  <!-- CHAPTER 3: THE EDGE -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 03 — THE EDGE</div>
+    <h2>Our advantage is people, not just plant.</h2>
+    <p>This isn't a generic recycling shed. Sarix is led by a <strong>highly qualified PhD electrochemist</strong> — the recovery chemistry is the team's home turf. That depth is what lets Sarix push recovery rates higher, run cleaner processes, and spot improvements competitors would miss.</p>
+    <div class="edge">
+      <div class="ecard"><div class="ic">🎓</div><h4>PhD-level chemistry</h4><p>Deep expertise in the electrochemical recovery science that the whole business runs on.</p></div>
+      <div class="ecard"><div class="ic">🔬</div><h4>In-house R&amp;D</h4><p>Constant refinement of reagents, electrodes and conditions to lift yield and cut cost.</p></div>
+      <div class="ecard"><div class="ic">📊</div><h4>Electrochemical analysis</h4><p>The same lab capability becomes a paid service — assay and feasibility testing for others.</p></div>
+      <div class="ecard"><div class="ic">⚡</div><h4>Process know-how</h4><p>Hard-won operating knowledge that's difficult for newcomers to copy.</p></div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4: PATENTS -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 04 — THE COMPOUNDING ASSET</div>
+    <h2>Every discovery becomes a patent.</h2>
+    <p>When deep expertise meets daily lab work, <strong>new methods get invented</strong>. Sarix's plan is simple: when the team finds a better way to recover a metal, <strong>patent it</strong>. Each patent does three things at once — it protects Sarix's process, it blocks competitors, and it becomes an asset Sarix can <strong>license to others for ongoing royalties</strong>.</p>
+    <div class="pull">A patent isn't a cost — it's <em>an asset that earns while you sleep.</em></div>
+    <div class="flow">
+      <div class="fstep"><div class="n">STEP 1</div><h5>Discover</h5><p>PhD team finds a better recovery method in the lab</p></div>
+      <div class="fstep"><div class="n">STEP 2</div><h5>Patent</h5><p>The method is filed and legally protected</p></div>
+      <div class="fstep"><div class="n">STEP 3</div><h5>Use &amp; license</h5><p>Sarix runs it — and licenses it to others</p></div>
+      <div class="fstep"><div class="n">STEP 4</div><h5>Earn royalties</h5><p>Recurring income, plus a stronger moat</p></div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 5: THE MONEY -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 05 — HOW IT ALL MAKES MONEY</div>
+    <h2>Five income lines, one operation.</h2>
+    <p>The same plant and the same team feed <strong>five separate revenue streams</strong> — so Sarix earns whether metal prices are high or low, and whether a client wants metal, a service, or the technology itself.</p>
+    <div class="money">
+      <div class="mrow m1"><div class="mi">💰</div><div><h5>Sell recovered metals</h5><p>Pure Cu, Au &amp; Ag at market price — the core line</p></div></div>
+      <div class="mrow m2"><div class="mi">🏭</div><div><h5>Tolling / processing fees</h5><p>Process clients' material under contract</p></div></div>
+      <div class="mrow m3"><div class="mi">📥</div><div><h5>Gate fees</h5><p>Paid just to accept e-waste for handling</p></div></div>
+      <div class="mrow m4"><div class="mi">📜</div><div><h5>Patent licensing</h5><p>Royalties from inventions licensed to others</p></div></div>
+      <div class="mrow m5"><div class="mi">🔬</div><div><h5>Electrochemical analysis</h5><p>Paid lab testing — high-margin &amp; recurring</p></div></div>
+    </div>
+
+    <p style="font-size:13px;color:var(--teal);letter-spacing:1px;margin:24px 0 6px">↓ HOW THE FIVE LINES STACK UP AS SARIX SCALES</p>
+    <div class="chartbox">
+      <div class="chartleg">
+        <span><i style="background:#2a78d6"></i>Sell metals</span>
+        <span><i style="background:#1baf7a"></i>Tolling fees</span>
+        <span><i style="background:#eda100"></i>Gate fees</span>
+        <span><i style="background:#9085e9"></i>Patent licensing</span>
+        <span><i style="background:#e34948"></i>Electrochemical analysis</span>
+      </div>
+      <div style="position:relative;width:100%;height:300px">
+        <canvas id="revchart" role="img" aria-label="Stacked bar chart of Sarix's five revenue lines growing across base, growth and scale phases, in millions of dollars."></canvas>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--mute)">Dollar amounts are illustrative phase targets, not promises — they show the <em>shape</em> of how revenue compounds. Metal sales grow with volume; analysis and licensing add high-margin, recurring income that holds up even when metal prices dip.</p>
+  </section>
+
+  <!-- CHAPTER 6: THE MARKET -->
+  <section class="chapter">
+    <div class="chapnum">CHAPTER 06 — THE PRIZE</div>
+    <h2>A billion-dollar market, wide open.</h2>
+    <p>Sarix is a small player aiming at a slice of a very large pie. The numbers below are <strong>real market sizes</strong> — Sarix's share is what the investment builds.</p>
+    <div class="stat-band">
+      <div class="sb"><div class="v">~$1.0B</div><div class="l">Australian e-waste recycling market today</div></div>
+      <div class="sb"><div class="v">~$1.8B</div><div class="l">that same market by 2034</div></div>
+      <div class="sb"><div class="v">~$91B</div><div class="l">metal value in one year of world e-waste (UN)</div></div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <section class="closer" id="contact">
+    <h2>The one-line version</h2>
+    <p>A PhD team recovers metal onshore, sells it five ways, and patents every breakthrough — in a market measured in billions.</p>
+    <a href="mailto:sarix.mel.au@gmail.com" class="btn">Talk to Sarix →</a>
+  </section>
+</div>
+
+<footer><div class="wrap">
+  <p><b>Notes &amp; sources.</b> Australian e-waste ~20 kg/person and PCBs sent offshore with no commercial domestic metals-recovery capacity (Sustainability Victoria; DCCEEW). Australian e-waste recycling market ~US$1.0B in 2025 rising toward ~US$1.8B by 2034 (ScrapTrade / IMARC). Metal value in global annual e-waste ~US$91B (UN, 2022). Electrochemical recovery figures from peer-reviewed studies. Patent income depends on filing, grant and successful licensing — outcomes are not guaranteed.</p>
+  <p style="margin-top:12px">© 2026 Sarix Pty Ltd (ACN 698 649 188), Victoria, Australia. Illustrative overview with research-anchored figures — not investment, financial, legal or engineering advice. Validate against site-specific data before any decision.</p>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const ions=document.getElementById('eions'), bub=document.getElementById('ebub');
+  const plate=document.getElementById('eplate'), cur=document.getElementById('ecur');
+  const curlab=document.getElementById('ecurlab'), rate=document.getElementById('erate');
+  const runBtn=document.getElementById('erun');
+  let running=true, P=[], B=[], thick=0, t=0;
+  function ion(){const c=document.createElementNS(NS,'circle');const y=88+Math.random()*166,x=210+Math.random()*150;
+    c.setAttribute('r',3.5);c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('fill','#37d3c6');
+    ions.appendChild(c);return {el:c,x,y};}
+  function bubble(){const c=document.createElementNS(NS,'circle');const x=384+Math.random()*6;
+    c.setAttribute('r',1.6+Math.random()*1.6);c.setAttribute('cx',x);c.setAttribute('cy',258);
+    c.setAttribute('fill','none');c.setAttribute('stroke','#378add');c.setAttribute('stroke-width','0.8');
+    bub.appendChild(c);return {el:c,y:258};}
+  for(let i=0;i<13;i++)P.push(ion());
+  function frame(){
+    if(running){t++;const sp=+cur.value;
+      P.forEach(p=>{const edge=176+thick;p.x-=0.32*sp+Math.random()*0.25;p.y+=Math.sin((t+p.x)/20)*0.35;
+        if(p.x<=edge){thick=Math.min(42,thick+0.011*sp);p.x=210+Math.random()*150;p.y=88+Math.random()*166;}
+        p.el.setAttribute('cx',p.x.toFixed(1));p.el.setAttribute('cy',p.y.toFixed(1));});
+      plate.setAttribute('x',(176-thick).toFixed(1));plate.setAttribute('width',thick.toFixed(1));
+      if(t%Math.max(3,9-sp)===0&&B.length<16)B.push(bubble());
+      B.forEach(b=>{b.y-=1+sp*0.11;b.el.setAttribute('cy',b.y.toFixed(1));});
+      B=B.filter(b=>{if(b.y<78){b.el.remove();return false;}return true;});
+      rate.textContent=(sp*0.62).toFixed(1)+' kg/h';}
+    requestAnimationFrame(frame);
+  }
+  cur.addEventListener('input',()=>curlab.textContent=cur.value+' kA');
+  runBtn.addEventListener('click',()=>{running=!running;runBtn.textContent=running?'Pause':'Run';});
+  frame();
+
+  const dark=true;const ink='#8295a3',grid='#243240';
+  const mk=(label,color,data)=>({label,data,backgroundColor:color,borderRadius:3,borderSkipped:false,maxBarThickness:80,stack:'s'});
+  new Chart(document.getElementById('revchart'),{
+    type:'bar',
+    data:{labels:['Base phase','Growth phase','Scale phase'],datasets:[
+      mk('Sell metals','#2a78d6',[4.5,14,38]),
+      mk('Tolling fees','#1baf7a',[1.5,5,13]),
+      mk('Gate fees','#eda100',[1.2,4,9]),
+      mk('Patent licensing','#9085e9',[0.3,1.5,6]),
+      mk('Electrochemical analysis','#e34948',[0.8,3,8]),
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>c.dataset.label+': $'+c.raw+'M'}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{color:ink,font:{size:12}}},
+        y:{stacked:true,grid:{color:grid},ticks:{color:ink,font:{size:12},callback:(v)=>'$'+v+'M'},
+           title:{display:true,text:'illustrative annual revenue (US$M)',color:ink,font:{size:12}}}}}
+  });
+})();
+</script>
+</body>
+</html>
